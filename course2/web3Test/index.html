@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Solidity 入门第二课作业 第一题</title>
+    <script type="text/javascript" src="./dist/web3.min.js"></script>
+</head>
+
+<body>
+    <button id="getRawTransaction">getRawTransaction</button> 
+    <div id="result"></div>   
+</body>
+<script type="text/javascript">
+    //https://chainlist.org/   这个网站查 API key
+    const url = 'https://goerli.infura.io/v3/9aa3d95b3bc440fa88ea12eaa4456161'
+    var web3 = new Web3(new Web3.providers.HttpProvider(url));
+
+    const resultTxt = document.querySelector('#result')
+    const checkAll = document.querySelector('#getRawTransaction')
+    checkAll.addEventListener('click', function () {
+       web3.eth.getTransaction('0x01957ea8c7690c58f6125bee78af460a3198db3a79daaaf9e10e195e65726db3').then((res)=>{
+           console.log(res)
+           resultTxt.innerHTML = JSON.stringify(res)
+       });
+    })
+
+</script>
+</html>
