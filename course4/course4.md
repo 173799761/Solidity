@@ -43,7 +43,39 @@ GPT3.5回复
 
 
 
+需要手动 
 
+安装*@truffle/hdwallet-provider*
+
+
+
+export privateKey = ""
+
+
+
+npm init
+
+npm install @truffle/hdwallet-provider --save
+
+
+
+truffle migrate --network rinkeby
+
+
+
+truffle migrate --network development
+
+
+
+truffle migrate --network development --reset  强制部署
+
+
+
+本地模拟的以太坊环境
+
+
+
+npm install @openzeppelin/contracts --save
 
 
 
@@ -107,7 +139,21 @@ nvm use --lts  最新的长期支持版本
 
 - [Truffle](https://trufflesuite.com/truffle/)
 
+- [Truffle Doc](https://learnblockchain.cn/docs/truffle/)
+
 - [第四课FAQ](https://tintinland1.notion.site/FAQ-9c05538a3d6a49438485eeae58df47f7)
+
+- [Ganache](https://trufflesuite.com/ganache/)
+
+- [OpenZeppelin](https://www.openzeppelin.com/contracts)
+
+- [OpenZeppelin Github](https://github.com/OpenZeppelin/openzeppelin-contracts/tree/master/contracts)
+
+- [测试工具Mocha](https://mochajs.org/)
+
+- [Mocha Github](https://github.com/mochajs/mocha)
+
+- [Hardhat](https://hardhat.org/)
 
   
 
