@@ -12,7 +12,7 @@
 truffle init
 ```
 
-2.安装 dotenv，配置privateKey和infuraId
+###### 2.安装 dotenv，配置privateKey和infuraId
 
 ```bash
 npm i dotenv
@@ -20,7 +20,7 @@ npm i dotenv
 
 
 
-truffle-config.js 引入 dotenv
+###### truffle-config.js 引入 dotenv
 
 ```bash
  require("dotenv").config();
@@ -29,7 +29,7 @@ truffle-config.js 引入 dotenv
 
 
 
-赋值privateKey和infuraId
+###### 赋值privateKey和infuraId
 
 ```bash
  const privateKey = process.env.privateKey;
@@ -103,11 +103,11 @@ npm init
 npm install @truffle/hdwallet-provider --save
 ```
 
-5.安装
 
 
 
-5.部署合约
+
+##### 5.部署合约
 
 
 
