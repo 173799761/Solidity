@@ -141,7 +141,19 @@ npm install @openzeppelin/contracts --save
 
 
 
+测试
 
+```
+truffle test ./test/erc20ext.js
+```
+
+
+
+测试成功截图
+
+
+
+![](https://uniepicweb.s3.ap-southeast-1.amazonaws.com/solidity/truffleTestOk.png)
 
 
 

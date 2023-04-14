@@ -1,8 +1,8 @@
 pragma solidity >=0.8.2 <0.9.0;
 
 import "@openzeppelin/contracts/token/ERC20/ERC20.sol";
-import "@openzeppelin/contracts/utils/math/SafeMath.sol"
-import "@openzeppelin/contracts/access/Ownable.sol"
+import "@openzeppelin/contracts/utils/math/SafeMath.sol";
+import "@openzeppelin/contracts/access/Ownable.sol";
 
 contract ERC20Ext is ERC20,Ownable{
 
@@ -30,7 +30,7 @@ contract ERC20Ext is ERC20,Ownable{
     
     function burn(uint256 _amount) public{
         require(balanceOf(msg.sender) >= _amount,"burn amount exceeds balance");
-        _burn(msg.send,_amount);
+        _burn(msg.sender,_amount);
     }
 
     function transfer(address _to,uint256 _amount) public virtual override returns (bool) {
@@ -40,8 +40,8 @@ contract ERC20Ext is ERC20,Ownable{
         uint256 fee = _amount.mul(feeRatio).div(1000);
         uint256 burnAmount = _amount.mul(burnRatio).div(1000);
         uint256 _amount = _amount.sub(fee).sub(burnAmount);
-        _transer(msg.sender,_to,_amount);
-        _transer(msg.sender,feeAddress,fee);
+        _transfer(msg.sender,_to,_amount);
+        _transfer(msg.sender,feeAddress,fee);
         if(burnAmount > 0){
             _burn(msg.sender,burnAmount);
         }
