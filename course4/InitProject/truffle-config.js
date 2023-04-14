@@ -66,8 +66,6 @@ module.exports = {
  
 // var infuraId = process.env.infuraId;
 
-  // var privateKey = '9aa3d95b3bc440fa88ea12eaa4456161';
-  // var infuraId = 'a65939973eea40d2543fd907fa281eeb024936ddcdc3d872249d396faea650a1';
 
   networks: {
     // Useful for testing. The `development` name is special - truffle uses it by default
