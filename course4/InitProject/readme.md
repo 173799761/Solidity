@@ -55,6 +55,20 @@ export infuraId =  "xxxxx"
     },
 ```
 
+本地
+
+
+
+```bash
+   development: {
+     host: "127.0.0.1",     // Localhost (default: none)
+     port: 7545,            // Standard Ethereum port (default: none)
+     network_id: "*",       // Any network (default: none)
+    },
+```
+
+
+
 ##### 3.配置编译器版本和setting
 
 ```bash
@@ -95,11 +109,39 @@ npm install @truffle/hdwallet-provider --save
 
 5.部署合约
 
+
+
+测试网
+
 ```bash
 truffle migrate --network goerli
 ```
 
+本地
 
-$$
+```bash
+truffle migrate --network development
+```
 
-$$
+
+
+开源合约
+
+开源协议选择 MIT
+
+
+
+
+
+openzeppelin安装
+
+```bash
+npm install @openzeppelin/contracts --save
+```
+
+
+
+
+
+
+
