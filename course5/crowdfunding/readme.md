@@ -42,13 +42,17 @@ src/crowd-funding.ts  handler实现的地方
 npm run build
 ```
 
-DEPLOY SUBGRAPH
+###### DEPLOY SUBGRAPH
 
 ```bash
 graph deploy --product hosted-service uniepicltd/crowdfunding
 ```
 
+###### 部署后的地址
 
+
+
+https://thegraph.com/explorer/subgraph/uniepicltd/crowdfunding
 
 ##### 其他资料
 
