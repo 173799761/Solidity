@@ -6,6 +6,12 @@
 
 用hosted Service免费网络
 
+
+
+合约地址 ：
+
+https://goerli.etherscan.io/address/0x69da41a6be31f4dc602ee2b970c59bea313a4065
+
 ###### 安装命令
 
 ```bash
