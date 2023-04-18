@@ -57,7 +57,7 @@
         <h3>4.ERC20ext合约<span class="h1Mark">销毁burn接口</span></h3>
             <button class="doBurn">销毁</button>
             <div class="burnAddrlbl">销毁账户地址:<span class="burnAddr"></span></div>
-            <span class="burnlbl">请输入销毁数量(单位:<span style="color: red;">ETH</span>) :</span><input type="text" class ="burnAmount" value="" style="width: 50px;">
+            <span class="burnlbl">请输入销毁数量(单位:<span style="color: red;">Wei</span>) :</span><input type="text" class ="burnAmount" value="2" style="width: 50px;">
             <ul class="navBurn">
                 <li><span class="estimateGaslbl">estimateGas :</span> <span class="estimateGas"></span></li>
                 <li><span class="gasPricelbl">gasPrice :</span> <span class="gasPrice"></span></li>
@@ -153,12 +153,12 @@
     let constractInstance = null 
 
     const readBtn = document.querySelector('.doRead')
-
+    let contractAddr = null
     readBtn.addEventListener('click', async function () {
         console.log('click readBtn')
         const erc20ExtAddrLbl = document.querySelector('.erc20ExtAddrLbl')
         console.log(erc20ExtAddrLbl.value)
-        const contractAddr = erc20ExtAddrLbl.value
+        contractAddr = erc20ExtAddrLbl.value
         if(contractAddr.trim().length == 0){
             alert('合约地址不能为空！！！');
         }
@@ -227,7 +227,7 @@
         if(constractInstance == null){
             alert('请先执行第二部操作，以构造合约实例')
         }
-        let transferData = constractInstance.methods.transfer(accAddr,mintWei).encodeABI();
+        let transferData = constractInstance.methods.mint(accAddr,mintWei).encodeABI();
         console.log(transferData)
 
         const transferDataSpan = document.querySelector('.navMint .transferData')
@@ -246,7 +246,7 @@
         let gasPrice = await web3.eth.getGasPrice()
         console.log(gasPrice)
         const gasPriceSpan = document.querySelector('.navMint .gasPrice')
-        gasPriceSpan.innerHTML = gasPrice
+        gasPriceSpan.innerHTML = web3.utils.fromWei(gasPrice,'gwei')
 
         let nonce = await web3.eth.getTransactionCount(accAddr)
         console.log(nonce)
@@ -282,6 +282,75 @@
         });
 
 
+    })
+
+
+        //doBurn 销毁
+    const doBurnBtn = document.querySelector('.doBurn')
+    doBurnBtn.addEventListener('click', async function () {
+        console.log('click doBurnBtn')
+        
+        const burnAmountInputTxt = document.querySelector('.burnAmount')
+        console.log(burnAmountInputTxt.value)
+       // const mintEth = +burnAmountInputTxt.value
+        const mintWei = burnAmountInputTxt.value
+        console.log(mintWei)
+        if(constractInstance == null){
+            alert('请先执行第二部操作，以构造合约实例')
+        }
+        let transferData = constractInstance.methods.burn(mintWei).encodeABI();
+        console.log(transferData)
+
+        const transferDataSpan = document.querySelector('.navBurn .transferData')
+        transferDataSpan.innerHTML = transferData
+
+        let estimateGas = await web3.eth.estimateGas({
+            to:contractAddr,
+            data:transferData,
+            from:accAddr,
+            value:'0x0'
+        });
+        console.log(estimateGas)
+        const estimateGasSpan = document.querySelector('.navBurn .estimateGas')
+        estimateGasSpan.innerHTML = estimateGas
+
+        let gasPrice = await web3.eth.getGasPrice()
+        console.log(gasPrice)
+        const gasPriceSpan = document.querySelector('.navBurn .gasPrice')
+        gasPriceSpan.innerHTML = web3.utils.fromWei(gasPrice,'gwei')
+
+        let nonce = await web3.eth.getTransactionCount(accAddr)
+        console.log(nonce)
+        const nonceSpan = document.querySelector('.navBurn .nonce')
+        nonceSpan.innerHTML = nonce
+
+        const nonceHexSpan = document.querySelector('.navBurn .nonceHex')
+        console.log(nonceHexSpan)
+        console.log(web3.utils.toHex(nonce))
+        nonceHexSpan.innerHTML = `${web3.utils.toHex(nonce)}`
+
+        let rawTrans = {
+            from:accAddr, 
+            to:contractAddr,
+            nonce:web3.utils.toHex(nonce),
+            gasPrice:gasPrice,
+            gas:estimateGas * 2,
+            value:'0x0',
+            data:transferData,
+            chainId:chainId
+        }
+
+        const rawTransSpan = document.querySelector('.navBurn .rawTrans')
+        console.log(rawTransSpan)
+        console.log(rawTrans)
+        console.log(JSON.stringify(rawTrans))
+        rawTransSpan.innerHTML = JSON.stringify(rawTrans)
+
+        web3.eth.sendTransaction(rawTrans).on("transactionHash",function(hash){
+            console.log("txtHash:",hash)
+            const txHashSpan = document.querySelector('.navBurn .txHash')
+            txHashSpan.innerHTML = hash
+        });
     })
     
 </script>

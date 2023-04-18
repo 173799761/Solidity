@@ -173,13 +173,11 @@ https://github.com/173799761/Solidity/tree/main/course4/erc20Ext
         if(constractInstance == null){
             alert('请先执行第二部操作，以构造合约实例')
         }
-        let transferData = constractInstance.methods.transfer(accAddr,mintWei).encodeABI();
+        let transferData = constractInstance.methods.mint(accAddr,mintWei).encodeABI();
         console.log(transferData)
 
         const transferDataSpan = document.querySelector('.navMint .transferData')
         transferDataSpan.innerHTML = transferData
-
-        
 
         let estimateGas = await web3.eth.estimateGas({
             to:burnAddrStr,
@@ -194,7 +192,7 @@ https://github.com/173799761/Solidity/tree/main/course4/erc20Ext
         let gasPrice = await web3.eth.getGasPrice()
         console.log(gasPrice)
         const gasPriceSpan = document.querySelector('.navMint .gasPrice')
-        gasPriceSpan.innerHTML = gasPrice
+        gasPriceSpan.innerHTML = web3.utils.fromWei(gasPrice,'gwei')
 
         let nonce = await web3.eth.getTransactionCount(accAddr)
         console.log(nonce)
@@ -241,13 +239,123 @@ https://github.com/173799761/Solidity/tree/main/course4/erc20Ext
 
 
 
-生成 txHash 0xa18dbca301299f8ac1697a3b4f0be387f0e782d2f8569807f22e659c09caa91f
+生成 txHash 0xb2cd7b6940229c01527b53080ce94fc6ca86251792e4f521d5985320cc48558b
 
-https://goerli.etherscan.io/tx/0xa18dbca301299f8ac1697a3b4f0be387f0e782d2f8569807f22e659c09caa91f
+https://goerli.etherscan.io/tx/0xb2cd7b6940229c01527b53080ce94fc6ca86251792e4f521d5985320cc48558b
 
 
 
 ![](https://uniepicweb.s3.ap-southeast-1.amazonaws.com/solidity/3.2.png)
+
+
+
+###### 销毁
+
+```javascript
+        //doBurn 销毁
+    const doBurnBtn = document.querySelector('.doBurn')
+    doBurnBtn.addEventListener('click', async function () {
+        console.log('click doBurnBtn')
+        
+        const burnAmountInputTxt = document.querySelector('.burnAmount')
+        console.log(burnAmountInputTxt.value)
+       // const mintEth = +burnAmountInputTxt.value
+        const mintWei = burnAmountInputTxt.value
+        console.log(mintWei)
+        if(constractInstance == null){
+            alert('请先执行第二部操作，以构造合约实例')
+        }
+        let transferData = constractInstance.methods.burn(mintWei).encodeABI();
+        console.log(transferData)
+
+        const transferDataSpan = document.querySelector('.navBurn .transferData')
+        transferDataSpan.innerHTML = transferData
+
+        let estimateGas = await web3.eth.estimateGas({
+            to:contractAddr,
+            data:transferData,
+            from:accAddr,
+            value:'0x0'
+        });
+        console.log(estimateGas)
+        const estimateGasSpan = document.querySelector('.navBurn .estimateGas')
+        estimateGasSpan.innerHTML = estimateGas
+
+        let gasPrice = await web3.eth.getGasPrice()
+        console.log(gasPrice)
+        const gasPriceSpan = document.querySelector('.navBurn .gasPrice')
+        gasPriceSpan.innerHTML = web3.utils.fromWei(gasPrice,'gwei')
+
+        let nonce = await web3.eth.getTransactionCount(accAddr)
+        console.log(nonce)
+        const nonceSpan = document.querySelector('.navBurn .nonce')
+        nonceSpan.innerHTML = nonce
+
+        const nonceHexSpan = document.querySelector('.navBurn .nonceHex')
+        console.log(nonceHexSpan)
+        console.log(web3.utils.toHex(nonce))
+        nonceHexSpan.innerHTML = `${web3.utils.toHex(nonce)}`
+
+        let rawTrans = {
+            from:accAddr, 
+            to:contractAddr,
+            nonce:web3.utils.toHex(nonce),
+            gasPrice:gasPrice,
+            gas:estimateGas * 2,
+            value:'0x0',
+            data:transferData,
+            chainId:chainId
+        }
+
+        const rawTransSpan = document.querySelector('.navBurn .rawTrans')
+        console.log(rawTransSpan)
+        console.log(rawTrans)
+        console.log(JSON.stringify(rawTrans))
+        rawTransSpan.innerHTML = JSON.stringify(rawTrans)
+
+        web3.eth.sendTransaction(rawTrans).on("transactionHash",function(hash){
+            console.log("txtHash:",hash)
+            const txHashSpan = document.querySelector('.navBurn .txHash')
+            txHashSpan.innerHTML = hash
+        });
+    })
+```
+
+
+
+结果如图
+
+
+
+txHash:0x9d6ac0414b9ca276647df2a4e8498023f43bf87e4f279a972555632227fe4142
+
+https://goerli.etherscan.io/tx/0x9d6ac0414b9ca276647df2a4e8498023f43bf87e4f279a972555632227fe4142
+
+
+
+弹出metamask 确认
+
+
+
+![](https://uniepicweb.s3.ap-southeast-1.amazonaws.com/solidity/4.1.png)
+
+
+
+
+
+产生txHash
+
+
+
+![](https://uniepicweb.s3.ap-southeast-1.amazonaws.com/solidity/4.2.png)
+
+
+
+https://goerli.etherscan.io/tx/0x9d6ac0414b9ca276647df2a4e8498023f43bf87e4f279a972555632227fe4142
+
+
+
+![](https://uniepicweb.s3.ap-southeast-1.amazonaws.com/solidity/4.3.png)
 
 ###### 其他资料
 
