@@ -1,40 +1,52 @@
-## Course2
-
-
+## Course6
 
 ##### web3.js api的使用
 
 
 
-安装 http-server
+###### 安装 http-server ,开启http服务
+
+
+
+安装
 
 ```bash
 npm i -g http-server
 ```
 
-##### **ERC20合约地址**
+开启
+
+```
+http-server
+```
 
 
+
+如下图:
+
+![](https://uniepicweb.s3.ap-southeast-1.amazonaws.com/solidity/httpserver.png)
+
+###### **ERC20合约地址**
 
 https://goerli.etherscan.io/address/0x6b42075063f3e4d12e415e41199396b8a438cc70
 
 
 
+源码地址：
 
-
-##### 单位
-
-###### 以太币单位
-
-1 wei == 1, 1gwei == 1e9 ,1 ether = 1e18
-
-###### 时间单位
-
-秒是默认单位
+https://github.com/173799761/Solidity/tree/main/course4/erc20Ext
 
 
 
-##### 其他资料
+
+
+
+
+
+
+
+
+###### 其他资料
 
 - [关于EIP1559](https://github.com/ethereum/EIPs/blob/master/EIPS/eip-1559.md)
 - [关于ABI](https://docs.soliditylang.org/en/develop/abi-spec.html)
