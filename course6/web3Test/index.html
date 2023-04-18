@@ -43,13 +43,28 @@
         <h3>3.ERC20ext合约<span class="h1Mark">增发mint接口，要求是合约创建者才能调用</span></h3>
             <button class="doMint">增发</button>
             <span class="mintMetaMaskAddrlbl">请输入账户钱包地址 :</span><input type="text" class ="mintMetaMaskAddr" value="" style="width: 315px;">
-            <span class="mintAmountlbl">请输入mint数量 (单位:<span style="color: red;">ETH</span>):</span><input type="text" class ="mintAmount" value="" style="width: 50px;">
+            <span class="mintAmountlbl">请输入mint数量 (单位:<span style="color: red;">ETH</span>):</span><input type="text" class ="mintAmount" value="10" style="width: 50px;">
+            <ul class="navMint">
+                <li><span class="estimateGaslbl">estimateGas :</span> <span class="estimateGas"></span></li>
+                <li><span class="gasPricelbl">gasPrice :</span> <span class="gasPrice"></span></li>
+                <li><span class="txHashlbl">txHash :</span> <span class="txHash"></span></li>
+                <li><span class="noncelbl">nonce :</span> <span class="nonce"></span></li>
+                <li><span class="transferDatalbl">transferData :</span> <span class="transferData"></span></li>
+                <li><span class="rawTrans">rawTrans :</span> <span class="rawTrans"></span></li>
+            </ul>
         <hr>
         <h3>4.ERC20ext合约<span class="h1Mark">销毁burn接口</span></h3>
             <button class="doBurn">销毁</button>
             <div class="burnAddrlbl">销毁账户地址:<span class="burnAddr"></span></div>
             <span class="burnlbl">请输入销毁数量(单位:<span style="color: red;">ETH</span>) :</span><input type="text" class ="burnAmount" value="" style="width: 50px;">
-
+            <ul class="navBurn">
+                <li><span class="estimateGaslbl">estimateGas :</span> <span class="estimateGas"></span></li>
+                <li><span class="gasPricelbl">gasPrice :</span> <span class="gasPrice"></span></li>
+                <li><span class="txHashlbl">txHash :</span> <span class="txHash"></span></li>
+                <li><span class="noncelbl">nonce :</span> <span class="nonce"></span></li>
+                <li><span class="transferDatalbl">transferData :</span> <span class="transferData"></span></li>
+                <li><span class="rawTrans">rawTrans :</span> <span class="rawTrans"></span></li>
+            </ul>
         <div id="footer">&nbsp;© Glen 郭梁</div>
 </body>
 <script type="text/javascript">
@@ -194,9 +209,49 @@
                 userTokenAmountDiv.innerHTML = `请输入正确的合约地址`
                 userTokenAmountDiv.style.color = 'red'
             }
+    })
+
+    //doMint 增发
+    const doMintBtn = document.querySelector('.doMint')
+    doMintBtn.addEventListener('click', async function () {
+        console.log('click doMintBtn')
+        console.log(burnAddr.innerHTML)
+        const burnAddrStr = burnAddr.innerHTML
+        const mintAmountInputTxt = document.querySelector('.mintAmount')
+        console.log(mintAmountInputTxt.value)
+        const mintEth = +mintAmountInputTxt.value
+        const mintWei = web3.utils.toWei(mintEth.toString())
+        console.log(mintWei)
+        if(constractInstance == null){
+            alert('请先执行第二部操作，以构造合约实例')
+        }
+        let transferData = constractInstance.methods.transfer(accAddr,mintWei).encodeABI();
+        console.log(transferData)
+
+        const transferDataSpan = document.querySelector('.navMint .transferData')
+        transferDataSpan.innerHTML = transferData
 
         
 
+        let estimateGas = await web3.eth.estimateGas({
+            to:burnAddrStr,
+            data:transferData,
+            from:accAddr,
+            value:'0x0'
+        });
+        console.log(estimateGas)
+        const estimateGasSpan = document.querySelector('.navMint .estimateGas')
+        estimateGasSpan.innerHTML = estimateGas
+
+        let gasPrice = await web3.eth.getGasPrice()
+        console.log(gasPrice)
+        const gasPriceSpan = document.querySelector('.navMint .gasPrice')
+        gasPriceSpan.innerHTML = gasPrice
+
+        let nonce = await web3.eth.getTransactionCount(accAddr)
+        console.log(nonce)
+        const nonceSpan = document.querySelector('.navMint .nonce')
+        nonceSpan.innerHTML = nonce
     })
     
 </script>
