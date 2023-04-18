@@ -233,8 +233,6 @@
         const transferDataSpan = document.querySelector('.navMint .transferData')
         transferDataSpan.innerHTML = transferData
 
-        
-
         let estimateGas = await web3.eth.estimateGas({
             to:burnAddrStr,
             data:transferData,
