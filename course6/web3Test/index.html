@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>course 6</title>
+   
+    <link href="css/main.css" rel="stylesheet">
+    <script type="text/javascript" src="js/web3.min.js"></script>
+</head>
+
+<body>
+    <h1 style="text-align: center;">Course 6</h1>
+    <h3>1.连接metamask<span class="h1Mark">通过metamask构造web3web3实例类</span></h3>
+    <button class="doConnect">connect wallet</button> 
+    <ul class="nav">
+        <li><span class="chainIdlbl">chainId :</span> <span class="chainId"></span></li>
+        <li><span class="blockNumberlbl">blockNumber :</span> <span class="blockNumber"></span></li>
+        <li><span class="blockTimestamplbl">blockTimestamp :</span> <span class="blockTimestamp"></span></li>
+        <li><span class="accAddrlbl">accAddr :</span> <span class="accAddr"></span></li>
+        <li><span class="accBalancelbl">accBalance :</span> <span class="accBalance"></span></li>
+        <li><span class="accBalanceFromWeilbl">accBalanceFromWei :</span> <span class="accBalanceFromWei"></span></li>
+    </ul>
+    <hr>
+    <h3>2.读取Goerli测试网上之前部署的ERC20ext合约<span class="h1Mark">通过rpc构造web3实例类</span></h3>
+        <div>
+            <button class="doRead">读取合约</button> 
+            <span class="accBalanceFromWeilbl">请输入合约地址 :</span><input type="text" class ="erc20ExtAddrLbl" value="0x6b42075063f3e4d12e415e41199396b8a438cc70" style="width: 315px;">
+            <ul class="nav">
+                <li><span class="tokenSymbollbl">tokenSymbol :</span> <span class="tokenSymbol"></span></li>
+                <li><span class="tokenTotalSupplylbl">tokenTotalSupply :</span> <span class="tokenTotalSupply"></span></li>
+            </ul> 
+        </div>
+        <div>
+            <button class="doUserBalance">获取指定账户代币数量</button>
+            <span class="userMetaMaskAddrlbl">请输入账户钱包地址 :</span><input type="text" class ="userMetaMaskAddr" value="" style="width: 315px;">
+            <ul class="nav">
+                <li><span class="userTokenAmountlbl">userTokenAmount :</span> <span class="userTokenAmount"></span></li>                
+            </ul> 
+        </div>
+</body>
+<script type="text/javascript">
+    //https://chainlist.org/   这个网站查 API key
+    // const url = 'https://goerli.infura.io/v3/9aa3d95b3bc440fa88ea12eaa4456161'
+    // var web3 = new Web3(new Web3.providers.HttpProvider(url));
+    let web3 = null
+    const erc20Abi = [{"inputs":[],"stateMutability":"nonpayable","type":"constructor"},{"anonymous":false,"inputs":[{"indexed":true,"internalType":"address","name":"owner","type":"address"},{"indexed":true,"internalType":"address","name":"spender","type":"address"},{"indexed":false,"internalType":"uint256","name":"value","type":"uint256"}],"name":"Approval","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"internalType":"address","name":"previousOwner","type":"address"},{"indexed":true,"internalType":"address","name":"newOwner","type":"address"}],"name":"OwnershipTransferred","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"internalType":"address","name":"from","type":"address"},{"indexed":true,"internalType":"address","name":"to","type":"address"},{"indexed":false,"internalType":"uint256","name":"value","type":"uint256"}],"name":"Transfer","type":"event"},{"inputs":[{"internalType":"address","name":"owner","type":"address"},{"internalType":"address","name":"spender","type":"address"}],"name":"allowance","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"address","name":"spender","type":"address"},{"internalType":"uint256","name":"amount","type":"uint256"}],"name":"approve","outputs":[{"internalType":"bool","name":"","type":"bool"}],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"address","name":"account","type":"address"}],"name":"balanceOf","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"uint256","name":"_amount","type":"uint256"}],"name":"burn","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[],"name":"burnRatio","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"decimals","outputs":[{"internalType":"uint8","name":"","type":"uint8"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"address","name":"spender","type":"address"},{"internalType":"uint256","name":"subtractedValue","type":"uint256"}],"name":"decreaseAllowance","outputs":[{"internalType":"bool","name":"","type":"bool"}],"stateMutability":"nonpayable","type":"function"},{"inputs":[],"name":"feeAddress","outputs":[{"internalType":"address","name":"","type":"address"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"feeRatio","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"address","name":"spender","type":"address"},{"internalType":"uint256","name":"addedValue","type":"uint256"}],"name":"increaseAllowance","outputs":[{"internalType":"bool","name":"","type":"bool"}],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"address","name":"_account","type":"address"},{"internalType":"uint256","name":"_amount","type":"uint256"}],"name":"mint","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[],"name":"name","outputs":[{"internalType":"string","name":"","type":"string"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"owner","outputs":[{"internalType":"address","name":"","type":"address"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"renounceOwnership","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"uint256","name":"_feeRatio","type":"uint256"},{"internalType":"uint256","name":"_burnRatio","type":"uint256"},{"internalType":"address","name":"_feeAddress","type":"address"}],"name":"set","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[],"name":"symbol","outputs":[{"internalType":"string","name":"","type":"string"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"totalSupply","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"address","name":"_to","type":"address"},{"internalType":"uint256","name":"_amount","type":"uint256"}],"name":"transfer","outputs":[{"internalType":"bool","name":"","type":"bool"}],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"address","name":"from","type":"address"},{"internalType":"address","name":"to","type":"address"},{"internalType":"uint256","name":"amount","type":"uint256"}],"name":"transferFrom","outputs":[{"internalType":"bool","name":"","type":"bool"}],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"address","name":"newOwner","type":"address"}],"name":"transferOwnership","outputs":[],"stateMutability":"nonpayable","type":"function"}]
+  
+
+    const connBtn = document.querySelector('.doConnect')
+    const chainIdDiv = document.querySelector('.chainId')
+    const blockNumberDiv = document.querySelector('.blockNumber')
+    const blockTimestampDiv = document.querySelector('.blockTimestamp')
+    const accAddrDiv = document.querySelector('.accAddr')
+    const accBalanceDiv = document.querySelector('.accBalance')
+    const accBalanceFromWeiDiv = document.querySelector('.accBalanceFromWei')
+
+    let chainId
+    let blockNumber
+    let blockTimestamp
+    let accAddr
+    let accBalance
+    let accBalanceFromWei
+
+    connBtn.addEventListener('click', async function () {
+        console.log('click connect wallet btn')
+        if (window.ethereum) {
+            try {
+                await window.ethereum.enable()
+                web3 = new Web3(window.ethereum)
+            } catch (error) {
+                console.log("error", error)
+            }
+        } else if (window.web3) {
+                web3 = new Web3(ethereum);
+        } else {
+            window.location.href = "https://metamask.io/download/";
+            return;
+        }
+
+        chainId = await web3.eth.getChainId()
+        console.log(`chainId is ${chainId}`)
+        chainIdDiv.innerHTML = `${chainId}`
+
+        blockNumber = await web3.eth.getBlockNumber()
+        blockNumberDiv.innerHTML = `${blockNumber}`
+
+        let block = await web3.eth.getBlock(blockNumber)
+        blockTimestamp = block.timestamp
+        blockTimestampDiv.innerHTML = `${blockTimestamp}`
+
+
+        let accounts = await web3.eth.getAccounts()
+        console.log(accounts)
+        accAddr = accounts[0]
+        accAddrDiv.innerHTML = `${accAddr}`
+
+        accBalance = await web3.eth.getBalance(accAddr)
+        accBalanceDiv.innerHTML = `${accBalance}`
+        accBalanceFromWeiDiv.innerHTML = `${web3.utils.fromWei(accBalance)}`
+    })
+
+
+    //合约读取相关
+    const url = 'https://goerli.infura.io/v3/9aa3d95b3bc440fa88ea12eaa4456161'
+    web3 = new Web3(new Web3.providers.HttpProvider(url));
+    let constractInstance = null 
+
+    const readBtn = document.querySelector('.doRead')
+
+    readBtn.addEventListener('click', async function () {
+        console.log('click readBtn')
+        const erc20ExtAddrLbl = document.querySelector('.erc20ExtAddrLbl')
+        console.log(erc20ExtAddrLbl.value)
+        const contractAddr = erc20ExtAddrLbl.value
+        if(contractAddr.trim().length == 0){
+            alert('合约地址不能为空！！！');
+        }
+        console.log('开始创建合约实例')
+
+
+
+        constractInstance = new web3.eth.Contract(erc20Abi,contractAddr)
+        console.log(constractInstance)
+
+        let tokenSymbol = await constractInstance.methods.symbol().call();
+        let tokenTotalSupply = await constractInstance.methods.totalSupply().call();
+        console.log(tokenSymbol)
+        console.log(tokenTotalSupply)
+
+        // let balance =  await constractInstance.methods.balanceOf('0x4486DE14Bdfc68Af4Be35D19953F8ea26fA8B6cf').call();
+        // console.log(balance)
+
+
+        const tokenSymbolDiv = document.querySelector('.tokenSymbol')
+        const tokenTotalSupplyDiv = document.querySelector('.tokenTotalSupply')
+        const balanceDiv = document.querySelector('.userTokenAmount')
+        tokenSymbolDiv.innerHTML = tokenSymbol
+        tokenTotalSupplyDiv.innerHTML = tokenTotalSupply
+       
+    })
+
+    const doUserBalanceBtn = document.querySelector('.doUserBalance')
+    doUserBalanceBtn.addEventListener('click', async function () {
+        console.log('click doUserBalanceBtn')
+        if(constractInstance == null){
+            alert('请先构造合约实例')
+        }
+        const userMetaMaskAddrInputText = document.querySelector('.userMetaMaskAddr')
+        console.log(userMetaMaskAddrInputText.value)
+        const userAddr = userMetaMaskAddrInputText.value
+        if(userAddr.trim().length == 0){
+            alert('合约地址不能为空！！！');
+        }
+        console.log(constractInstance)
+
+        const userTokenAmountDiv = document.querySelector('.userTokenAmount')
+
+        try {
+                let balance =  await constractInstance.methods.balanceOf(userAddr).call();
+                console.log(balance)
+                userTokenAmountDiv.innerHTML = balance
+                userTokenAmountDiv.style.color = '#555'
+            } catch (error) {
+                userTokenAmountDiv.innerHTML = `请输入正确的合约地址`
+                userTokenAmountDiv.style.color = 'red'
+            }
+
+        
+
+    })
+    
+</script>
+</html>
