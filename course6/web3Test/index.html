@@ -40,9 +40,14 @@
             </ul> 
         </div>
         <hr>
-        <h3>3.ERC20ext合约<span class="h1Mark">增发mint接口</span></h3>
+        <h3>3.ERC20ext合约<span class="h1Mark">增发mint接口，要求是合约创建者才能调用</span></h3>
+            <button class="doMint">增发</button>
+            <span class="mintMetaMaskAddrlbl">请输入账户钱包地址 :</span><input type="text" class ="mintMetaMaskAddr" value="" style="width: 315px;">
+            <span class="mintAmountlbl">请输入mint数量 :</span><input type="text" class ="mintAmount" value="" style="width: 50px;">
         <hr>
         <h3>4.ERC20ext合约<span class="h1Mark">销毁burn接口</span></h3>
+            <button class="doBurn">销毁</button>
+            <span class="burnlbl">请输入销毁数量 :</span><input type="text" class ="burnAmount" value="" style="width: 50px;">
         <div id="footer">&nbsp;© Glen 郭梁</div>
 </body>
 <script type="text/javascript">

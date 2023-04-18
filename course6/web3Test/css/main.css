@@ -149,6 +149,7 @@ a:after {
 
 #footer {
 	background-color: #2f2f2f;
+	margin-top: 20px;
 	padding-top: 20px;
 	padding-bottom: 20px; 
 	color: #ffffff;
@@ -259,6 +260,13 @@ bt {
 	font-size: 14px;
 }
 
+.mintMetaMaskAddrlbl,
+.mintAmountlbl
+{
+	font-weight: 700;
+	font-size: 14px;
+}
+
 .h1Mark{
 	font-size: 12px;
 	color: gray;
@@ -276,11 +284,17 @@ bt {
 	color: red;
 }
 
+
+
 .view{
 	margin-top: 2px;
 }
 
-.erc20ExtAddrLbl{
+.erc20ExtAddrLbl,
+.mintMetaMaskAddr,
+.mintAmount,
+.userMetaMaskAddr,
+.burnAmount{
 	margin-left: 10px;
 }
 
