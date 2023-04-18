@@ -19,8 +19,8 @@
         <li><span class="blockNumberlbl">blockNumber :</span> <span class="blockNumber"></span></li>
         <li><span class="blockTimestamplbl">blockTimestamp :</span> <span class="blockTimestamp"></span></li>
         <li><span class="accAddrlbl">accAddr :</span> <span class="accAddr"></span></li>
-        <li><span class="accBalancelbl">accBalance :</span> <span class="accBalance"></span></li>
-        <li><span class="accBalanceFromWeilbl">accBalanceFromWei :</span> <span class="accBalanceFromWei"></span></li>
+        <li><span class="accBalancelbl">accBalance (单位:<span style="color: red;">Wei</span>):</span> <span class="accBalance"></span></li>
+        <li><span class="accBalanceFromWeilbl">accBalanceFromWei(单位:<span style="color: red;">ETH</span>) :</span> <span class="accBalanceFromWei"></span></li>
     </ul>
     <hr>
     <h3>2.读取Goerli测试网上之前部署的ERC20ext合约<span class="h1Mark">通过rpc构造web3实例类</span></h3>
@@ -43,12 +43,12 @@
         <h3>3.ERC20ext合约<span class="h1Mark">增发mint接口，要求是合约创建者才能调用</span></h3>
             <button class="doMint">增发</button>
             <span class="mintMetaMaskAddrlbl">请输入账户钱包地址 :</span><input type="text" class ="mintMetaMaskAddr" value="" style="width: 315px;">
-            <span class="mintAmountlbl">请输入mint数量 :</span><input type="text" class ="mintAmount" value="" style="width: 50px;">
+            <span class="mintAmountlbl">请输入mint数量 (单位:<span style="color: red;">ETH</span>):</span><input type="text" class ="mintAmount" value="" style="width: 50px;">
         <hr>
         <h3>4.ERC20ext合约<span class="h1Mark">销毁burn接口</span></h3>
             <button class="doBurn">销毁</button>
             <div class="burnAddrlbl">销毁账户地址:<span class="burnAddr"></span></div>
-            <span class="burnlbl">请输入销毁数量 :</span><input type="text" class ="burnAmount" value="" style="width: 50px;">
+            <span class="burnlbl">请输入销毁数量(单位:<span style="color: red;">ETH</span>) :</span><input type="text" class ="burnAmount" value="" style="width: 50px;">
 
         <div id="footer">&nbsp;© Glen 郭梁</div>
 </body>
