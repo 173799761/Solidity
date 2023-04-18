@@ -47,7 +47,9 @@
         <hr>
         <h3>4.ERC20ext合约<span class="h1Mark">销毁burn接口</span></h3>
             <button class="doBurn">销毁</button>
+            <div class="burnAddrlbl">销毁账户地址:<span class="burnAddr"></span></div>
             <span class="burnlbl">请输入销毁数量 :</span><input type="text" class ="burnAmount" value="" style="width: 50px;">
+
         <div id="footer">&nbsp;© Glen 郭梁</div>
 </body>
 <script type="text/javascript">
@@ -68,6 +70,9 @@
 
 
     const userMetaMaskAddrInputText = document.querySelector('.userMetaMaskAddr')
+
+    const mintMetaMaskAddrInputText = document.querySelector('.mintMetaMaskAddr')
+    const burnAddr = document.querySelector('.burnAddr')
 
     let chainId
     let blockNumber
@@ -115,6 +120,13 @@
 
         userMetaMaskAddrInputText.value = `${accAddr}`
         userMetaMaskAddrInputText.style.color = 'red'
+
+        burnAddr.innerHTML = `${accAddr}`
+        burnAddr.style.color = 'red'
+
+        mintMetaMaskAddrInputText.value = `${accAddr}`
+        mintMetaMaskAddrInputText.style.color = 'red'
+        
     })
 
 

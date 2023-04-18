@@ -261,8 +261,9 @@ bt {
 }
 
 .mintMetaMaskAddrlbl,
-.mintAmountlbl
-{
+.mintAmountlbl,
+.burnAddrlbl,
+.burnlbl{
 	font-weight: 700;
 	font-size: 14px;
 }
