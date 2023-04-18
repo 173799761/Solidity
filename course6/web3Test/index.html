@@ -49,8 +49,9 @@
                 <li><span class="gasPricelbl">gasPrice :</span> <span class="gasPrice"></span></li>
                 <li><span class="txHashlbl">txHash :</span> <span class="txHash"></span></li>
                 <li><span class="noncelbl">nonce :</span> <span class="nonce"></span></li>
+                <li><span class="nonceHexlbl">nonceHex :</span> <span class="nonceHex"></span></li>
                 <li><span class="transferDatalbl">transferData :</span> <span class="transferData"></span></li>
-                <li><span class="rawTrans">rawTrans :</span> <span class="rawTrans"></span></li>
+                <li><span class="rawTranslbl">rawTrans :</span> <span class="rawTrans"></span></li>
             </ul>
         <hr>
         <h3>4.ERC20ext合约<span class="h1Mark">销毁burn接口</span></h3>
@@ -62,8 +63,9 @@
                 <li><span class="gasPricelbl">gasPrice :</span> <span class="gasPrice"></span></li>
                 <li><span class="txHashlbl">txHash :</span> <span class="txHash"></span></li>
                 <li><span class="noncelbl">nonce :</span> <span class="nonce"></span></li>
+                <li><span class="nonceHexlbl">nonceHex :</span> <span class="nonceHex"></span></li>
                 <li><span class="transferDatalbl">transferData :</span> <span class="transferData"></span></li>
-                <li><span class="rawTrans">rawTrans :</span> <span class="rawTrans"></span></li>
+                <li><span class="rawTranslbl">rawTrans :</span> <span class="rawTrans"></span></li>
             </ul>
         <div id="footer">&nbsp;© Glen 郭梁</div>
 </body>
@@ -252,6 +254,25 @@
         console.log(nonce)
         const nonceSpan = document.querySelector('.navMint .nonce')
         nonceSpan.innerHTML = nonce
+
+        const nonceHexSpan = document.querySelector('.navMint .nonceHex')
+        console.log(nonceHexSpan)
+        console.log(web3.utils.toHex(nonce))
+        nonceHexSpan.innerHTML = `${web3.utils.toHex(nonce)}`
+
+        let rawTrans = {
+            from:accAddr, 
+            to:burnAddrStr,
+            nonce:web3.utils.toHex(nonce),
+            gasPrice:gasPrice,
+            gas:estimateGas * 2,
+        }
+
+        const rawTransSpan = document.querySelector('.navMint .rawTrans')
+        console.log(rawTransSpan)
+        console.log(rawTrans)
+        console.log(JSON.stringify(rawTrans))
+        rawTransSpan.innerHTML = JSON.stringify(rawTrans)
     })
     
 </script>
