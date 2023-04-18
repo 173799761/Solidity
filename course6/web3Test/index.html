@@ -66,6 +66,9 @@
     const accBalanceDiv = document.querySelector('.accBalance')
     const accBalanceFromWeiDiv = document.querySelector('.accBalanceFromWei')
 
+
+    const userMetaMaskAddrInputText = document.querySelector('.userMetaMaskAddr')
+
     let chainId
     let blockNumber
     let blockTimestamp
@@ -109,6 +112,9 @@
         accBalance = await web3.eth.getBalance(accAddr)
         accBalanceDiv.innerHTML = `${accBalance}`
         accBalanceFromWeiDiv.innerHTML = `${web3.utils.fromWei(accBalance)}`
+
+        userMetaMaskAddrInputText.value = `${accAddr}`
+        userMetaMaskAddrInputText.style.color = 'red'
     })
 
 
@@ -157,7 +163,7 @@
         if(constractInstance == null){
             alert('请先构造合约实例')
         }
-        const userMetaMaskAddrInputText = document.querySelector('.userMetaMaskAddr')
+        
         console.log(userMetaMaskAddrInputText.value)
         const userAddr = userMetaMaskAddrInputText.value
         if(userAddr.trim().length == 0){
