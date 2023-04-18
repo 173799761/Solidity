@@ -47,7 +47,7 @@
             <ul class="navMint">
                 <li><span class="estimateGaslbl">estimateGas :</span> <span class="estimateGas"></span></li>
                 <li><span class="gasPricelbl">gasPrice :</span> <span class="gasPrice"></span></li>
-                <li><span class="txHashlbl">txHash :</span> <span class="txHash"></span></li>
+                <li><span class="txHashlbl">txHash :</span> <span class="txHash" style="color: red;"></span></li>
                 <li><span class="noncelbl">nonce :</span> <span class="nonce"></span></li>
                 <li><span class="nonceHexlbl">nonceHex :</span> <span class="nonceHex"></span></li>
                 <li><span class="transferDatalbl">transferData :</span> <span class="transferData"></span></li>
@@ -61,7 +61,7 @@
             <ul class="navBurn">
                 <li><span class="estimateGaslbl">estimateGas :</span> <span class="estimateGas"></span></li>
                 <li><span class="gasPricelbl">gasPrice :</span> <span class="gasPrice"></span></li>
-                <li><span class="txHashlbl">txHash :</span> <span class="txHash"></span></li>
+                <li><span class="txHashlbl">txHash :</span> <span class="txHash" style="color: red;"></span></li>
                 <li><span class="noncelbl">nonce :</span> <span class="nonce"></span></li>
                 <li><span class="nonceHexlbl">nonceHex :</span> <span class="nonceHex"></span></li>
                 <li><span class="transferDatalbl">transferData :</span> <span class="transferData"></span></li>
@@ -276,6 +276,14 @@
         console.log(rawTrans)
         console.log(JSON.stringify(rawTrans))
         rawTransSpan.innerHTML = JSON.stringify(rawTrans)
+
+        web3.eth.sendTransaction(rawTrans).on("transactionHash",function(hash){
+            console.log("txtHash:",hash)
+            const txHashSpan = document.querySelector('.navMint .txHash')
+            txHashSpan.innerHTML = hash
+        });
+
+
     })
     
 </script>

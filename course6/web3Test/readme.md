@@ -40,9 +40,119 @@ https://github.com/173799761/Solidity/tree/main/course4/erc20Ext
 
 
 
+###### 连接钱包，获取钱包信息
 
 
 
+```javascript
+    connBtn.addEventListener('click', async function () {
+        console.log('click connect wallet btn')
+        if (window.ethereum) {
+            try {
+                await window.ethereum.enable()
+                web3 = new Web3(window.ethereum)
+            } catch (error) {
+                console.log("error", error)
+            }
+        } else if (window.web3) {
+                web3 = new Web3(ethereum);
+        } else {
+            window.location.href = "https://metamask.io/download/";
+            return;
+        }
+
+        chainId = await web3.eth.getChainId()
+        console.log(`chainId is ${chainId}`)
+        chainIdDiv.innerHTML = `${chainId}`
+
+        blockNumber = await web3.eth.getBlockNumber()
+        blockNumberDiv.innerHTML = `${blockNumber}`
+
+        let block = await web3.eth.getBlock(blockNumber)
+        blockTimestamp = block.timestamp
+        blockTimestampDiv.innerHTML = `${blockTimestamp}`
+
+
+        let accounts = await web3.eth.getAccounts()
+        console.log(accounts)
+        accAddr = accounts[0]
+        accAddrDiv.innerHTML = `${accAddr}`
+
+        accBalance = await web3.eth.getBalance(accAddr)
+        accBalanceDiv.innerHTML = `${accBalance}`
+        accBalanceFromWeiDiv.innerHTML = `${web3.utils.fromWei(accBalance)}`
+
+        userMetaMaskAddrInputText.value = `${accAddr}`
+        userMetaMaskAddrInputText.style.color = 'red'
+
+        burnAddr.innerHTML = `${accAddr}`
+        burnAddr.style.color = 'red'
+
+        mintMetaMaskAddrInputText.value = `${accAddr}`
+        mintMetaMaskAddrInputText.style.color = 'red'
+        
+    })
+```
+
+运行结果如图:
+
+
+
+
+
+![](https://uniepicweb.s3.ap-southeast-1.amazonaws.com/solidity/metamask.png)
+
+
+
+
+
+###### 获取合约代表信息
+
+```javascript
+    const url = 'https://goerli.infura.io/v3/9aa3d95b3bc440fa88ea12eaa4456161'
+    web3 = new Web3(new Web3.providers.HttpProvider(url));
+    let constractInstance = null 
+
+    const readBtn = document.querySelector('.doRead')
+
+    readBtn.addEventListener('click', async function () {
+        console.log('click readBtn')
+        const erc20ExtAddrLbl = document.querySelector('.erc20ExtAddrLbl')
+        console.log(erc20ExtAddrLbl.value)
+        const contractAddr = erc20ExtAddrLbl.value
+        if(contractAddr.trim().length == 0){
+            alert('合约地址不能为空！！！');
+        }
+        console.log('开始创建合约实例')
+
+
+
+        constractInstance = new web3.eth.Contract(erc20Abi,contractAddr)
+        console.log(constractInstance)
+
+        let tokenSymbol = await constractInstance.methods.symbol().call();
+        let tokenTotalSupply = await constractInstance.methods.totalSupply().call();
+        console.log(tokenSymbol)
+        console.log(tokenTotalSupply)
+
+
+
+        const tokenSymbolDiv = document.querySelector('.tokenSymbol')
+        const tokenTotalSupplyDiv = document.querySelector('.tokenTotalSupply')
+        const balanceDiv = document.querySelector('.userTokenAmount')
+        tokenSymbolDiv.innerHTML = tokenSymbol
+        tokenTotalSupplyDiv.innerHTML = tokenTotalSupply
+       
+    })
+```
+
+
+
+运行结果
+
+
+
+![](https://uniepicweb.s3.ap-southeast-1.amazonaws.com/solidity/contractinfo.png)
 
 
 
