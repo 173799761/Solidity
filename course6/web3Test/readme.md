@@ -159,7 +159,7 @@ https://github.com/173799761/Solidity/tree/main/course4/erc20Ext
 ###### 增发
 
 ```javascript
-    //doMint 增发
+  //doMint 增发
     const doMintBtn = document.querySelector('.doMint')
     doMintBtn.addEventListener('click', async function () {
         console.log('click doMintBtn')
@@ -180,7 +180,7 @@ https://github.com/173799761/Solidity/tree/main/course4/erc20Ext
         transferDataSpan.innerHTML = transferData
 
         let estimateGas = await web3.eth.estimateGas({
-            to:burnAddrStr,
+            to:contractAddr,
             data:transferData,
             from:accAddr,
             value:'0x0'
@@ -206,7 +206,7 @@ https://github.com/173799761/Solidity/tree/main/course4/erc20Ext
 
         let rawTrans = {
             from:accAddr, 
-            to:burnAddrStr,
+            to:contractAddr,
             nonce:web3.utils.toHex(nonce),
             gasPrice:gasPrice,
             gas:estimateGas * 2,
@@ -233,19 +233,21 @@ https://github.com/173799761/Solidity/tree/main/course4/erc20Ext
 
 执行结果
 
-
-
 ![](https://uniepicweb.s3.ap-southeast-1.amazonaws.com/solidity/3.1.png)
 
 
 
-生成 txHash 0xb2cd7b6940229c01527b53080ce94fc6ca86251792e4f521d5985320cc48558b
 
-https://goerli.etherscan.io/tx/0xb2cd7b6940229c01527b53080ce94fc6ca86251792e4f521d5985320cc48558b
+
+生成 txHash 0x7bad58c2395f85846be61d7947f29bdf081301faf8a4b58eed9198a756a9af54
+
+https://goerli.etherscan.io/tx/0x7bad58c2395f85846be61d7947f29bdf081301faf8a4b58eed9198a756a9af54
 
 
 
 ![](https://uniepicweb.s3.ap-southeast-1.amazonaws.com/solidity/3.2.png)
+
+
 
 
 
@@ -356,6 +358,91 @@ https://goerli.etherscan.io/tx/0x9d6ac0414b9ca276647df2a4e8498023f43bf87e4f279a9
 
 
 ![](https://uniepicweb.s3.ap-southeast-1.amazonaws.com/solidity/4.3.png)
+
+
+
+###### 剩余页面布局代码
+
+
+
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>course 6</title>
+   
+    <link href="css/main.css" rel="stylesheet">
+    <script type="text/javascript" src="js/web3.min.js"></script>
+</head>
+
+<body>
+    <h1 style="text-align: center;">Course 6</h1>
+    <h3>1.连接metamask<span class="h1Mark">通过metamask构造web3web3实例类</span></h3>
+    <button class="doConnect">connect wallet</button> 
+    <ul class="nav">
+        <li><span class="chainIdlbl">chainId :</span> <span class="chainId"></span></li>
+        <li><span class="blockNumberlbl">blockNumber :</span> <span class="blockNumber"></span></li>
+        <li><span class="blockTimestamplbl">blockTimestamp :</span> <span class="blockTimestamp"></span></li>
+        <li><span class="accAddrlbl">accAddr :</span> <span class="accAddr"></span></li>
+        <li><span class="accBalancelbl">accBalance (单位:<span style="color: red;">Wei</span>):</span> <span class="accBalance"></span></li>
+        <li><span class="accBalanceFromWeilbl">accBalanceFromWei(单位:<span style="color: red;">ETH</span>) :</span> <span class="accBalanceFromWei"></span></li>
+    </ul>
+    <hr>
+    <h3>2.读取Goerli测试网上之前部署的ERC20ext合约<span class="h1Mark">通过rpc构造web3实例类</span></h3>
+        <div>
+            <button class="doRead">读取合约</button> 
+            <span class="accBalanceFromWeilbl">请输入合约地址 :</span><input type="text" class ="erc20ExtAddrLbl" value="0x6b42075063f3e4d12e415e41199396b8a438cc70" style="width: 315px;">
+            <ul class="nav">
+                <li><span class="tokenSymbollbl">tokenSymbol :</span> <span class="tokenSymbol"></span></li>
+                <li><span class="tokenTotalSupplylbl">tokenTotalSupply :</span> <span class="tokenTotalSupply"></span></li>
+            </ul> 
+        </div>
+        <div>
+            <button class="doUserBalance">获取指定账户代币数量</button>
+            <span class="userMetaMaskAddrlbl">请输入账户钱包地址 :</span><input type="text" class ="userMetaMaskAddr" value="" style="width: 315px;">
+            <ul class="nav">
+                <li><span class="userTokenAmountlbl">userTokenAmount :</span> <span class="userTokenAmount"></span></li>                
+            </ul> 
+        </div>
+        <hr>
+        <h3>3.ERC20ext合约<span class="h1Mark">增发mint接口，要求是合约创建者才能调用</span></h3>
+            <button class="doMint">增发</button>
+            <span class="mintMetaMaskAddrlbl">请输入账户钱包地址 :</span><input type="text" class ="mintMetaMaskAddr" value="" style="width: 315px;">
+            <span class="mintAmountlbl">请输入mint数量 (单位:<span style="color: red;">ETH</span>):</span><input type="text" class ="mintAmount" value="10" style="width: 50px;">
+            <ul class="navMint">
+                <li><span class="estimateGaslbl">estimateGas :</span> <span class="estimateGas"></span></li>
+                <li><span class="gasPricelbl">gasPrice :</span> <span class="gasPrice"></span></li>
+                <li><span class="txHashlbl">txHash :</span> <span class="txHash" style="color: red;"></span></li>
+                <li><span class="noncelbl">nonce :</span> <span class="nonce"></span></li>
+                <li><span class="nonceHexlbl">nonceHex :</span> <span class="nonceHex"></span></li>
+                <li><span class="transferDatalbl">transferData :</span> <span class="transferData"></span></li>
+                <li><span class="rawTranslbl">rawTrans :</span> <span class="rawTrans"></span></li>
+            </ul>
+        <hr>
+        <h3>4.ERC20ext合约<span class="h1Mark">销毁burn接口</span></h3>
+            <button class="doBurn">销毁</button>
+            <div class="burnAddrlbl">销毁账户地址:<span class="burnAddr"></span></div>
+            <span class="burnlbl">请输入销毁数量(单位:<span style="color: red;">Wei</span>) :</span><input type="text" class ="burnAmount" value="2" style="width: 50px;">
+            <ul class="navBurn">
+                <li><span class="estimateGaslbl">estimateGas :</span> <span class="estimateGas"></span></li>
+                <li><span class="gasPricelbl">gasPrice :</span> <span class="gasPrice"></span></li>
+                <li><span class="txHashlbl">txHash :</span> <span class="txHash" style="color: red;"></span></li>
+                <li><span class="noncelbl">nonce :</span> <span class="nonce"></span></li>
+                <li><span class="nonceHexlbl">nonceHex :</span> <span class="nonceHex"></span></li>
+                <li><span class="transferDatalbl">transferData :</span> <span class="transferData"></span></li>
+                <li><span class="rawTranslbl">rawTrans :</span> <span class="rawTrans"></span></li>
+            </ul>
+        <div id="footer">&nbsp;© Glen 郭梁</div>
+</body>
+</html>
+```
+
+
+
+
 
 ###### 其他资料
 

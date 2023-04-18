@@ -234,7 +234,7 @@
         transferDataSpan.innerHTML = transferData
 
         let estimateGas = await web3.eth.estimateGas({
-            to:burnAddrStr,
+            to:contractAddr,
             data:transferData,
             from:accAddr,
             value:'0x0'
@@ -260,7 +260,7 @@
 
         let rawTrans = {
             from:accAddr, 
-            to:burnAddrStr,
+            to:contractAddr,
             nonce:web3.utils.toHex(nonce),
             gasPrice:gasPrice,
             gas:estimateGas * 2,
